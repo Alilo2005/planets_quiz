@@ -111,8 +111,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "You zip through ideas at orbital velocity. Patterns reveal themselves to you like star maps — you're curious, clever, and always tuned to the next signal.",
     funFact: "A day on Mercury is longer than its year. Wild clock math.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?planet,Mercury",
-    imageAlt: "Mercury — real planet imagery via Unsplash",
+    imageUrl: "/planets/mercury.jpg",
+    imageAlt: "Mercury planet image",
   },
   venus: {
     id: "venus",
@@ -122,8 +122,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "You design harmony in a noisy universe. Your presence softens edges and turns static into symphony. People feel seen in your orbit.",
     funFact: "Venus spins backwards — it prefers its own rhythm.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?planet,Venus",
-    imageAlt: "Venus — real planet imagery via Unsplash",
+    imageUrl: "/planets/venus.jpg",
+    imageAlt: "Venus planet image",
   },
   earth: {
     id: "earth",
@@ -133,8 +133,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "Grounded yet generous, you bring order to chaos and care to action. You keep ecosystems — and teams — flourishing.",
     funFact: "Earth is the only known planet with liquid water on the surface.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?Earth,blue%20marble,space",
-    imageAlt: "Earth from space — real imagery via Unsplash",
+    imageUrl: "/planets/earth.jpg",
+    imageAlt: "Earth planet image",
   },
   mars: {
     id: "mars",
@@ -144,8 +144,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "You pulse with Mars energy — fearless, fiery, and unstoppable. Goals are fuel; momentum is your native tongue.",
     funFact: "Mars hosts the tallest volcano in the solar system: Olympus Mons.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?Mars,red%20planet,space",
-    imageAlt: "Mars — real planet imagery via Unsplash",
+    imageUrl: "/planets/mars.jpg",
+    imageAlt: "Mars planet image",
   },
   jupiter: {
     id: "jupiter",
@@ -155,8 +155,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "You think big and lift others bigger. Wisdom meets whimsy — you expand possibilities like a gas giant expanding horizons.",
     funFact: "Jupiter's magnetic field is the largest structure in the solar system.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?Jupiter,gas%20giant,planet",
-    imageAlt: "Jupiter — real planet imagery via Unsplash",
+    imageUrl: "/planets/jupiter.jpg",
+    imageAlt: "Jupiter planet image",
   },
   saturn: {
     id: "saturn",
@@ -166,8 +166,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "Disciplined, strategic, quietly powerful. You build legacies with patience and polish — constraints are your canvas.",
     funFact: "Saturn could float in water — it's less dense than a bath.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?Saturn,rings,planet",
-    imageAlt: "Saturn and its rings — real imagery via Unsplash",
+    imageUrl: "/planets/saturn.jpg",
+    imageAlt: "Saturn planet image",
   },
   uranus: {
     id: "uranus",
@@ -177,8 +177,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "Visionary, inventive, delightfully off-axis. You tilt the status quo and spark the new — systems bend when you arrive.",
     funFact: "Uranus rotates on its side — like a cosmic barrel roll.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?Uranus,ice%20giant,planet",
-    imageAlt: "Uranus — real planet imagery via Unsplash",
+    imageUrl: "/planets/uranus.jpg",
+    imageAlt: "Uranus planet image",
   },
   neptune: {
     id: "neptune",
@@ -188,8 +188,8 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "Like Neptune, you dream in colors no telescope can see. Empathy and imagination are your superpowers.",
     funFact: "Neptune's winds can scream faster than sound.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?Neptune,blue%20planet,space",
-    imageAlt: "Neptune — real planet imagery via Unsplash",
+    imageUrl: "/planets/neptune.jpg",
+    imageAlt: "Neptune planet image",
   },
   pluto: {
     id: "pluto",
@@ -199,8 +199,7 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     description:
       "Deep, transformative, and magnetic. You find meaning in molten cores — endings become portals in your hands.",
     funFact: "Pluto has a heart-shaped glacier named Tombaugh Regio.",
-    imageUrl: "https://source.unsplash.com/featured/800x800/?Pluto,dwarf%20planet,space",
-    imageAlt: "Pluto — real planet imagery via Unsplash",
+    // No local image available for Pluto; fallback to emoji
   },
 };
 
