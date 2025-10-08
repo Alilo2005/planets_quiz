@@ -31,7 +31,7 @@ export default function ResultPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-6 py-10 space-y-6">
-      <h1 className="text-3xl md:text-5xl font-serif text-white text-center">Your Cosmic Match</h1>
+  <h1 className="text-3xl md:text-5xl font-cosmic text-white text-center">Your Cosmic Match</h1>
       <PlanetResultCard planet={planet} />
       <div className="flex items-center justify-center gap-3">
         <CosmicButton onClick={() => { reset(); router.push("/"); }}>Retake Quiz</CosmicButton>

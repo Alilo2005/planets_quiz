@@ -40,7 +40,7 @@ export default function QuestionCard({
         <CosmicProximityText
           as="span"
           text={prompt}
-          className="text-2xl md:text-3xl font-semibold font-serif text-white leading-snug"
+          className="text-2xl md:text-3xl font-semibold font-cosmic text-white leading-snug"
         />
       </h2>
       <div className="grid gap-3">

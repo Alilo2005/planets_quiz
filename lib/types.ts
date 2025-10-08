@@ -38,4 +38,6 @@ export interface PlanetInfo {
   tagline: string;
   description: string;
   funFact: string;
+  imageUrl?: string; // Optional Unsplash image URL
+  imageAlt?: string; // Optional alt text for the image
 }

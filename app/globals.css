@@ -93,6 +93,13 @@ html, body, #__next {
 /* Optional glow hovers */
 .glow:hover { box-shadow: 0 0 24px rgba(168,85,247,0.4); }
 
+/* Display font utility for titles; expects 'Nasalization' to be available in the page */
+/* Cosmic display font (Orbitron via next/font) */
+.font-cosmic {
+  font-family: var(--font-cosmic), system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
