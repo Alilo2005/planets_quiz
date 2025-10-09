@@ -5,6 +5,7 @@ import { useQuiz } from "@/lib/quizContext";
 import { computeResult, planets } from "@/lib/quizData";
 import PlanetResultCard from "@/components/PlanetResultCard";
 import DecryptedText from "@/components/DecryptedText";
+import { Github, Instagram } from "lucide-react";
 import CosmicButton from "@/components/CosmicButton";
 
 export default function ResultPage() {
@@ -52,14 +53,26 @@ export default function ResultPage() {
           <DecryptedText text="Share Result" animateOn="view" encryptedClassName="text-fuchsia-300/70" />
         </CosmicButton>
       </div>
-      <p className="text-center text-silver pt-4">
-        <DecryptedText
-          text="Your cosmic essence has been revealed. Share your planet with the universe."
-          animateOn="view"
-          speed={30}
-          encryptedClassName="text-sky-200/70"
-        />
-      </p>
+      <div className="pt-4 flex items-center justify-center gap-5 text-silver">
+        <a
+          href="https://github.com/Alilo2005"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          className="cursor-target hover:text-white/90 transition-colors"
+        >
+          <Github className="h-6 w-6" strokeWidth={1.75} />
+        </a>
+        <a
+          href="https://www.instagram.com/astrotech_esi/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          className="cursor-target hover:text-white/90 transition-colors"
+        >
+          <Instagram className="h-6 w-6" strokeWidth={1.75} />
+        </a>
+      </div>
       {shared && (
         <p className="text-center text-sky-200/90">
           <DecryptedText text={shared} animateOn="view" encryptedClassName="text-sky-300/70" />

@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import PixelTransition from "@/components/PixelTransition";
 import DecryptedText from "@/components/DecryptedText";
 import type { PlanetInfo } from "@/lib/types";
 
@@ -17,25 +18,47 @@ export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
           >
             <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-full overflow-hidden bg-gradient-to-tr from-fuchsia-500/40 via-sky-400/40 to-violet-500/40 shadow-[0_0_80px_rgba(168,85,247,0.35)]">
               <motion.div
-                className="absolute inset-0 rounded-full"
+                className="absolute inset-0 rounded-full z-0"
                 animate={{ rotate: 360 }}
                 transition={{ repeat: Infinity, duration: 18, ease: "linear" }}
                 style={{ boxShadow: "inset 20px -20px 60px rgba(0,0,0,0.35)" }}
               />
               <motion.div
-                className="absolute -inset-3 rounded-full border border-white/10"
+                className="absolute -inset-3 rounded-full border border-white/10 z-0"
                 animate={{ rotate: -360 }}
                 transition={{ repeat: Infinity, duration: 24, ease: "linear" }}
               />
               {planet.imageUrl ? (
-                <Image
-                  src={planet.imageUrl}
-                  alt={planet.imageAlt || `${planet.name} — Unsplash`}
-                  fill
-                  sizes="(max-width: 768px) 10rem, 12rem"
-                  className="object-cover"
-                  priority
-                />
+                <div className="absolute inset-0 rounded-full overflow-hidden z-10">
+                  <PixelTransition
+                    unstyled
+                    fitParent
+                    gridSize={12}
+                    pixelColor="rgba(168,85,247,0.6)"
+                    animationStepDuration={0.5}
+                    className="w-full h-full"
+                    firstContent={
+                      <Image
+                        src={planet.imageUrl}
+                        alt={planet.imageAlt || `${planet.name}`}
+                        fill
+                        sizes="(max-width: 768px) 10rem, 12rem"
+                        className="object-cover"
+                        priority
+                      />
+                    }
+                    secondContent={
+                      <Image
+                        src={planet.imageUrl}
+                        alt={planet.imageAlt || `${planet.name}`}
+                        fill
+                        sizes="(max-width: 768px) 10rem, 12rem"
+                        className="object-cover"
+                        priority
+                      />
+                    }
+                  />
+                </div>
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-5xl select-none">
                   {planet.emoji}
