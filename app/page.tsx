@@ -5,6 +5,7 @@ import BlurText from "@/components/BlurText";
 import CosmicProximityText from "@/components/CosmicProximityText";
 import dynamic from "next/dynamic";
 import DecryptedText from "@/components/DecryptedText";
+import { LaserFlow } from "@/components/LaserFlow";
 
 const AstrotechTag = dynamic(() => import("@/components/AstrotechTag"), { ssr: false });
 
@@ -32,6 +33,23 @@ export default function Home() {
           </CosmicButton>
         </Link>
       </div>
+      {/* Right-side laser accent filling the vertical area */}
+      <div
+        className="hidden md:block pointer-events-none absolute inset-y-0 right-0 w-[40vw] max-w-[640px]"
+        aria-hidden="true"
+      >
+        <LaserFlow
+          className="absolute inset-0"
+          color="#a855f7"
+          fogIntensity={0.4}
+          wispDensity={1.2}
+          horizontalSizing={0.4}
+          verticalSizing={2.6}
+          horizontalBeamOffset={0.2}
+          verticalBeamOffset={0.0}
+        />
+      </div>
+
       <AstrotechTag className="text-white/90" textClassName="text-white/90" />
     </div>
   );
