@@ -3,6 +3,7 @@ import { motion, useMotionValue, useTransform } from "framer-motion";
 import { AnswerOption } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import CosmicProximityText from "@/components/CosmicProximityText";
+import DecryptedText from "@/components/DecryptedText";
 
 export default function QuestionCard({
   prompt,
@@ -42,6 +43,9 @@ export default function QuestionCard({
           text={prompt}
           className="text-2xl md:text-3xl font-semibold font-cosmic text-white leading-snug"
         />
+        <span className="sr-only">
+          <DecryptedText text={prompt} animateOn="view" />
+        </span>
       </h2>
       <div className="grid gap-3">
         {options.map((opt) => (
@@ -54,7 +58,9 @@ export default function QuestionCard({
               selected === opt.id && "bg-white/15 border-white/30 ring-1 ring-fuchsia-400/40"
             )}
           >
-            <span className="text-silver text-base md:text-lg">{opt.text}</span>
+            <span className="text-silver text-base md:text-lg">
+              <DecryptedText text={opt.text} animateOn="view" encryptedClassName="text-sky-200/70" />
+            </span>
           </button>
         ))}
       </div>

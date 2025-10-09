@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import DecryptedText from "@/components/DecryptedText";
 import type { PlanetInfo } from "@/lib/types";
 
 export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
@@ -44,10 +45,48 @@ export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
           </motion.div>
         </div>
         <div>
-          <h2 className="text-3xl md:text-4xl font-cosmic text-white mb-2">{planet.name}</h2>
-          <p className="text-fuchsia-300 mb-4">{planet.tagline}</p>
-          <p className="text-silver leading-relaxed mb-4">{planet.description}</p>
-          <p className="text-sky-200/90"><span className="font-semibold text-sky-100">Fun fact:</span> {planet.funFact}</p>
+          <h2 className="text-3xl md:text-4xl font-cosmic text-white mb-2">
+            <DecryptedText
+              text={planet.name}
+              animateOn="view"
+              sequential
+              revealDirection="center"
+              speed={40}
+              className="text-white"
+              encryptedClassName="text-fuchsia-300/70"
+            />
+          </h2>
+          <p className="text-fuchsia-300 mb-4">
+            <DecryptedText
+              text={planet.tagline}
+              animateOn="view"
+              speed={30}
+              encryptedClassName="text-fuchsia-200/70"
+            />
+          </p>
+          <p className="text-silver leading-relaxed mb-4">
+            <DecryptedText
+              text={planet.description}
+              animateOn="view"
+              speed={28}
+              encryptedClassName="text-sky-200/60"
+            />
+          </p>
+          <p className="text-sky-200/90 flex gap-1 items-baseline flex-wrap">
+            <DecryptedText
+              text="Fun fact:"
+              animateOn="view"
+              speed={26}
+              className="font-semibold text-sky-100"
+              encryptedClassName="text-sky-300/70"
+            />
+            <DecryptedText
+              text={planet.funFact}
+              animateOn="view"
+              speed={26}
+              encryptedClassName="text-sky-200/70"
+            />
+          </p>
         </div>
       </div>
       <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/10" />

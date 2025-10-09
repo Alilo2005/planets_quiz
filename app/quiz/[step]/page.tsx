@@ -5,6 +5,7 @@ import { useQuiz } from "@/lib/quizContext";
 import QuestionCard from "@/components/QuestionCard";
 import CosmicButton from "@/components/CosmicButton";
 import ProgressBar from "@/components/ProgressBar";
+import DecryptedText from "@/components/DecryptedText";
 
 export default function QuizStep() {
   const router = useRouter();
@@ -26,10 +27,14 @@ export default function QuizStep() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-10 space-y-6">
       <ProgressBar value={idx} total={total} />
-      <p className="text-silver">Stage {idx + 1} of {total}</p>
+      <p className="text-silver">
+        <DecryptedText text={`Stage ${idx + 1} of ${total}`} animateOn="view" encryptedClassName="text-sky-200/70" />
+      </p>
       <QuestionCard prompt={q.prompt} options={q.options} selected={selected} onSelect={onSelect} />
       <div className="flex justify-end">
-        <CosmicButton onClick={goNext} disabled={!selected}>Next</CosmicButton>
+        <CosmicButton onClick={goNext} disabled={!selected}>
+          <DecryptedText text="Next" animateOn="view" encryptedClassName="text-fuchsia-300/70" />
+        </CosmicButton>
       </div>
     </div>
   );

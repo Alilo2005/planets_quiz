@@ -4,6 +4,7 @@ import CosmicButton from "@/components/CosmicButton";
 import BlurText from "@/components/BlurText";
 import CosmicProximityText from "@/components/CosmicProximityText";
 import dynamic from "next/dynamic";
+import DecryptedText from "@/components/DecryptedText";
 
 const AstrotechTag = dynamic(() => import("@/components/AstrotechTag"), { ssr: false });
 
@@ -22,8 +23,13 @@ export default function Home() {
           text={"Step into the neon void. Drift through aurora gradients and starlit signals. At the journey's end, a world will speak your name."}
           className="text-silver"
         />
+        <p className="sr-only">
+          <DecryptedText text={"Step into the neon void. Drift through aurora gradients and starlit signals. At the journey's end, a world will speak your name."} animateOn="view" />
+        </p>
         <Link href="/quiz/1">
-          <CosmicButton className="text-lg">Start Quiz</CosmicButton>
+          <CosmicButton className="text-lg">
+            <DecryptedText text="Start Quiz" animateOn="view" encryptedClassName="text-fuchsia-300/70" />
+          </CosmicButton>
         </Link>
       </div>
       <AstrotechTag className="text-white/90" textClassName="text-white/90" />
