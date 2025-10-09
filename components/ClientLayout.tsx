@@ -27,7 +27,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
             className="h-full w-full"
           />
         </div>
-        <TargetCursor targetSelector=".cursor-target, a, button" hideDefaultCursor={false} />
+  <TargetCursor targetSelector=".cursor-target, a, button" hideDefaultCursor={false} disableOnTouch />
         <AnimatePresence mode="wait">
           <motion.main
             key={pathname}

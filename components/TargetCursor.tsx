@@ -5,17 +5,21 @@ export interface TargetCursorProps {
   targetSelector?: string;
   spinDuration?: number;
   hideDefaultCursor?: boolean;
+  disableOnTouch?: boolean; // disable custom cursor on touch/coarse pointers
 }
 
 const TargetCursor: React.FC<TargetCursorProps> = ({
   targetSelector = '.cursor-target',
   spinDuration = 2,
-  hideDefaultCursor = true
+  hideDefaultCursor = true,
+  disableOnTouch = true
 }) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const cornersRef = useRef<NodeListOf<HTMLDivElement>>(null);
   const spinTl = useRef<gsap.core.Timeline>(null);
   const dotRef = useRef<HTMLDivElement>(null);
+  const enabledRef = useRef<boolean>(false);
+  const [enabled, setEnabled] = React.useState(false);
   const constants = useMemo(
     () => ({
       borderWidth: 3,
@@ -36,6 +40,23 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
   }, []);
 
   useEffect(() => {
+    // Decide if we should enable the custom cursor (avoid on touch/coarse)
+    const isCoarse = () => {
+      if (typeof window === 'undefined') return false;
+      return (
+        ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints ?? 0) > 0 ||
+        (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)
+      );
+    };
+
+    const shouldEnable = disableOnTouch ? !isCoarse() : true;
+    enabledRef.current = shouldEnable;
+    setEnabled(shouldEnable);
+  }, [disableOnTouch]);
+
+  useEffect(() => {
+    if (!enabled) return;
     if (!cursorRef.current) return;
 
     const originalCursor = document.body.style.cursor;
@@ -312,9 +333,10 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
       spinTl.current?.kill();
       document.body.style.cursor = originalCursor;
     };
-  }, [targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor]);
+  }, [enabled, targetSelector, spinDuration, moveCursor, constants, hideDefaultCursor]);
 
   useEffect(() => {
+    if (!enabled) return;
     if (!cursorRef.current || !spinTl.current) return;
 
     if (spinTl.current.isActive()) {
@@ -323,7 +345,7 @@ const TargetCursor: React.FC<TargetCursorProps> = ({
         .timeline({ repeat: -1 })
         .to(cursorRef.current, { rotation: '+=360', duration: spinDuration, ease: 'none' });
     }
-  }, [spinDuration]);
+  }, [enabled, spinDuration]);
 
   return (
     <div
