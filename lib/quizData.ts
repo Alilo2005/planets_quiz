@@ -9,7 +9,7 @@ export const questions: Question[] = [
       { id: "a", text: "Curiosity — I chase signals no one else hears.", weights: { mercury: 1, uranus: 0.5 } },
       { id: "b", text: "Connection — people are my orbit.", weights: { venus: 1, earth: 0.5 } },
       { id: "c", text: "Impact — I want to move moons.", weights: { mars: 1, jupiter: 0.5 } },
-      { id: "d", text: "Wonder — I vibe with the unknown.", weights: { neptune: 1, pluto: 0.5 } },
+  { id: "d", text: "Wonder — I vibe with the unknown.", weights: { neptune: 1 } },
     ],
   },
   {
@@ -19,7 +19,7 @@ export const questions: Question[] = [
     options: [
       { id: "a", text: "Light but quick — I bounce back fast.", weights: { mercury: 1 } },
       { id: "b", text: "Warm and magnetic — I attract harmony.", weights: { venus: 1, earth: 0.5 } },
-      { id: "c", text: "Fiery — I burn bright when I care.", weights: { mars: 1, pluto: 0.5 } },
+  { id: "c", text: "Fiery — I burn bright when I care.", weights: { mars: 1 } },
       { id: "d", text: "Tidal — deep and slow-moving.", weights: { neptune: 1, saturn: 0.5 } },
     ],
   },
@@ -31,7 +31,7 @@ export const questions: Question[] = [
       { id: "a", text: "I remix ideas at light speed.", weights: { mercury: 1, uranus: 0.5 } },
       { id: "b", text: "I craft beauty that feels timeless.", weights: { venus: 1, saturn: 0.5 } },
       { id: "c", text: "I prototype bold things that work.", weights: { mars: 1, jupiter: 0.5 } },
-      { id: "d", text: "I channel dreams and symbolism.", weights: { neptune: 1, pluto: 0.5 } },
+  { id: "d", text: "I channel dreams and symbolism.", weights: { neptune: 1 } },
     ],
   },
   {
@@ -42,7 +42,7 @@ export const questions: Question[] = [
       { id: "a", text: "Navigator — maps, signals, and strategy.", weights: { mercury: 0.8, saturn: 0.8 } },
       { id: "b", text: "Harmonizer — morale, vibes, and culture.", weights: { venus: 1, earth: 0.5 } },
       { id: "c", text: "Commander — goals, momentum, results.", weights: { mars: 1, jupiter: 0.5 } },
-      { id: "d", text: "Wildcard — visionary moves, rule-bender.", weights: { uranus: 1, pluto: 0.5 } },
+  { id: "d", text: "Wildcard — visionary moves, rule-bender.", weights: { uranus: 1 } },
     ],
   },
   {
@@ -75,7 +75,7 @@ export const questions: Question[] = [
       { id: "a", text: "Assess signals and adapt quickly.", weights: { mercury: 1, uranus: 0.5 } },
       { id: "b", text: "Protect the crew and stabilize.", weights: { earth: 1, venus: 0.5 } },
       { id: "c", text: "Charge through with grit.", weights: { mars: 1, saturn: 0.5 } },
-      { id: "d", text: "Look for the hidden meaning.", weights: { pluto: 1, neptune: 0.5 } },
+  { id: "d", text: "Look for the hidden meaning.", weights: { neptune: 1 } },
     ],
   },
   {
@@ -86,7 +86,7 @@ export const questions: Question[] = [
       { id: "a", text: "Truth and understanding.", weights: { jupiter: 1, mercury: 0.5 } },
       { id: "b", text: "Love and beauty.", weights: { venus: 1, earth: 0.3 } },
       { id: "c", text: "Discipline and legacy.", weights: { saturn: 1, mars: 0.3 } },
-      { id: "d", text: "Transformation and freedom.", weights: { pluto: 1, uranus: 0.5 } },
+  { id: "d", text: "Transformation and freedom.", weights: { uranus: 1 } },
     ],
   },
   {
@@ -191,20 +191,10 @@ export const planets: Record<PlanetId, PlanetInfo> = {
     imageUrl: "/planets/neptune.jpg",
     imageAlt: "Neptune planet image",
   },
-  pluto: {
-    id: "pluto",
-    name: "Pluto",
-    emoji: "🧿",
-    tagline: "Underworld alchemist of change.",
-    description:
-      "Deep, transformative, and magnetic. You find meaning in molten cores — endings become portals in your hands.",
-    funFact: "Pluto has a heart-shaped glacier named Tombaugh Regio.",
-    // No local image available for Pluto; fallback to emoji
-  },
 };
 
 // Planet id list reused in normalization and scoring
-const PLANET_IDS: PlanetId[] = [
+export const PLANET_IDS: PlanetId[] = [
   "mercury",
   "venus",
   "earth",
@@ -213,7 +203,6 @@ const PLANET_IDS: PlanetId[] = [
   "saturn",
   "uranus",
   "neptune",
-  "pluto",
 ];
 
 // Compute how often each planet appears (and with what weight) across all options.
@@ -232,7 +221,7 @@ const PLANET_OPPORTUNITY: Record<PlanetId, number> = (() => {
 })();
 
 // Scale factors so that each planet's total opportunity is normalized around the average.
-const PLANET_NORMALIZATION: Record<PlanetId, number> = (() => {
+export const PLANET_NORMALIZATION: Record<PlanetId, number> = (() => {
   const vals = PLANET_IDS.map((id) => PLANET_OPPORTUNITY[id] || 0);
   const sum = vals.reduce((a, b) => a + b, 0);
   const avg = (sum / PLANET_IDS.length) || 1;
@@ -242,6 +231,27 @@ const PLANET_NORMALIZATION: Record<PlanetId, number> = (() => {
   ) as Record<PlanetId, number>;
   return out;
 })();
+
+// Public helper: apply normalization to raw scores
+export function getAdjustedScores(scores: Partial<Record<PlanetId, number>>): Record<PlanetId, number> {
+  const out: Record<PlanetId, number> = Object.fromEntries(PLANET_IDS.map((id) => [id, 0])) as Record<PlanetId, number>;
+  for (const id of PLANET_IDS) {
+    const raw = scores[id] ?? 0;
+    out[id] = raw * (PLANET_NORMALIZATION[id] ?? 1);
+  }
+  return out;
+}
+
+// Public helper: return planets ranked by adjusted score, desc
+export function rankPlanets(scores: Partial<Record<PlanetId, number>>): Array<{ id: PlanetId; score: number }> {
+  const adjusted = getAdjustedScores(scores);
+  return PLANET_IDS
+    .map((id) => ({ id, score: adjusted[id] }))
+    .sort((a, b) => b.score - a.score);
+}
+
+// Public helper: return normalization-adjusted planet scores
+// (Duplicate removed) getAdjustedScores is defined above.
 
 // Deterministic tie-breaking to avoid bias toward earlier planets in the list.
 export function computeResult(scores: Partial<Record<PlanetId, number>>): PlanetId {

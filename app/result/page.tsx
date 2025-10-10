@@ -1,20 +1,30 @@
 "use client";
 import Head from "next/head";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuiz } from "@/lib/quizContext";
-import { computeResult, planets } from "@/lib/quizData";
+import { computeResult, planets, questions } from "@/lib/quizData";
 import PlanetResultCard from "@/components/PlanetResultCard";
+import WhyThisResult from "@/components/WhyThisResult";
 import DecryptedText from "@/components/DecryptedText";
 import { Github, Instagram } from "lucide-react";
 import CosmicButton from "@/components/CosmicButton";
+import { gaEvent } from "@/lib/gtag";
 
 export default function ResultPage() {
   const router = useRouter();
-  const { scores, reset } = useQuiz();
+  const { scores, reset, answers } = useQuiz();
   const planetId = useMemo(() => computeResult(scores), [scores]);
   const planet = planets[planetId];
   const [shared, setShared] = useState<string | null>(null);
+  // no local breakdown state; WhyThisResult builds it from questions + answers
+
+  // Fire GA completion event
+  useEffect(() => {
+    gaEvent("complete_quiz", {
+      result_planet: planetId,
+    });
+  }, [planetId]);
 
   async function share() {
     const text = `I just discovered my cosmic match: ${planet.name} ${planet.emoji} — ${planet.tagline}. What planet are you?`;
@@ -60,6 +70,7 @@ export default function ResultPage() {
         />
       </h1>
       <PlanetResultCard planet={planet} />
+      <WhyThisResult planetId={planetId as any} scores={scores} questions={questions} answers={answers} />
       <div className="flex items-center justify-center gap-3">
         <CosmicButton onClick={() => { reset(); router.push("/"); }}>
           <DecryptedText text="Retake Quiz" animateOn="view" encryptedClassName="text-fuchsia-300/70" />

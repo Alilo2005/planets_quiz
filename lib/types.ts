@@ -6,8 +6,7 @@ export type PlanetId =
   | "jupiter"
   | "saturn"
   | "uranus"
-  | "neptune"
-  | "pluto";
+  | "neptune";
 
 export interface AnswerOption {
   id: string;

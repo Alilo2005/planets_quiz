@@ -6,6 +6,7 @@ import QuestionCard from "@/components/QuestionCard";
 import CosmicButton from "@/components/CosmicButton";
 import ProgressBar from "@/components/ProgressBar";
 import DecryptedText from "@/components/DecryptedText";
+import { gaEvent } from "@/lib/gtag";
 
 export default function QuizStep() {
   const router = useRouter();
@@ -22,6 +23,14 @@ export default function QuizStep() {
 
   function onSelect(aId: string) {
     setAnswer(q.id, aId);
+    const opt = q.options.find((o) => o.id === aId);
+    // Fire GA event for option selection (non-PII)
+    gaEvent("select_option", {
+      question_id: q.id,
+      question_topic: q.topic,
+      answer_id: aId,
+      weights: opt?.weights ?? {},
+    });
   }
 
   return (
