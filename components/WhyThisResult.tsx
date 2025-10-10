@@ -1,7 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { PLANET_IDS, getAdjustedScores, rankPlanets } from "@/lib/quizData";
 import type { PlanetId, Question } from "@/lib/types";
 
 export default function WhyThisResult({
@@ -15,8 +14,7 @@ export default function WhyThisResult({
   questions: Question[];
   answers: Record<string, string | undefined>;
 }) {
-  const adjusted = useMemo(() => getAdjustedScores(scores), [scores]);
-  const ranked = useMemo(() => rankPlanets(scores), [scores]);
+  // Confidence bar was removed; no need to compute adjusted/ranked here.
 
   const rows = useMemo(() => {
     return questions.map((q) => {
@@ -30,25 +28,32 @@ export default function WhyThisResult({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="max-w-4xl mx-auto">
+  <div className="max-w-4xl mx-auto w-full px-4 md:px-0">
       {/* Confidence bar removed as requested */}
 
-      <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-3 md:p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h2 className="text-white/90 font-semibold">Why this result?</h2>
-          <button onClick={() => setExpanded((v) => !v)} className="text-sm text-sky-300 hover:text-sky-200">
+  <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-3 sm:p-4 md:p-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+          <h2 className="text-white/90 font-semibold">
+            <span className="">Why this result?</span>
+          </h2>
+          <button
+            onClick={() => setExpanded((v) => !v)}
+            className="text-sm text-sky-300 hover:text-sky-200 w-max self-end sm:self-auto"
+            aria-expanded={expanded}
+            aria-controls="why-result-list"
+          >
             {expanded ? "Show less" : "Show more"}
           </button>
         </div>
-        <ul className="grid gap-1">
+        <ul id="why-result-list" className="grid gap-1">
           {(expanded ? rows : rows.slice(0, 4)).map((row) => (
             <li key={row.qId} className="relative rounded-xl border border-white/10 p-2">
-              <div className="flex items-baseline gap-2 text-white/80">
-                <span className="capitalize min-w-28 text-sm">{row.topic}</span>
-                <span className="flex-1 truncate text-silver text-sm">{row.answer || "—"}</span>
-                <span className="text-sky-300/90 text-sm font-medium">+{row.contribution.toFixed(2)}</span>
+              <div className="flex items-baseline gap-2 text-white/80 w-full">
+                <span className="capitalize shrink-0 text-sm">{row.topic}</span>
+                <span className="hidden sm:block flex-1 truncate text-silver text-sm">{row.answer || "—"}</span>
+                <span className="text-sky-300/90 text-sm font-medium ml-auto">+{row.contribution.toFixed(2)}</span>
               </div>
-              <div className="mt-2 h-1.5 rounded bg-white/10 overflow-hidden">
+              <div className="mt-1 sm:mt-2 h-1.5 rounded bg-white/10 overflow-hidden">
                 <motion.div
                   className="h-full bg-gradient-to-r from-fuchsia-500/80 via-sky-400/80 to-violet-500/80"
                   initial={{ width: 0 }}
