@@ -1,5 +1,5 @@
-import Head from "next/head";
 "use client";
+import Head from "next/head";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useQuiz } from "@/lib/quizContext";

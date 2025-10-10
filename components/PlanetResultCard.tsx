@@ -4,10 +4,12 @@ import Image from "next/image";
 import PixelTransition from "@/components/PixelTransition";
 import DecryptedText from "@/components/DecryptedText";
 import type { PlanetInfo } from "@/lib/types";
+import ElectricBorder from "@/components/ElectricBorder";
 
 export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
   return (
-    <div className="relative w-full max-w-4xl mx-auto p-6 md:p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl">
+    <ElectricBorder className="relative w-full max-w-4xl mx-auto rounded-2xl" color="#a855f7" thickness={2} chaos={1} speed={1.2}>
+      <div className="relative p-6 md:p-8 rounded-2xl bg-white/5 backdrop-blur-xl">
       <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
         <div className="relative h-48 md:h-56">
           <motion.div
@@ -114,6 +116,7 @@ export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
       </div>
       <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/10" />
       <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-tr from-fuchsia-500/10 via-sky-400/10 to-violet-500/10" />
-    </div>
+      </div>
+    </ElectricBorder>
   );
 }
