@@ -1,3 +1,4 @@
+import Head from "next/head";
 "use client";
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -32,7 +33,21 @@ export default function ResultPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-10 space-y-6">
+    <>
+      <Head>
+        <title>Your Cosmic Match | What Planet Am I?</title>
+        <meta name="description" content={`Discover your cosmic match: ${planet.name} — ${planet.tagline}. Take the quiz and share your result!`} />
+        <meta property="og:title" content={`Your Cosmic Match: ${planet.name} | What Planet Am I?`} />
+        <meta property="og:description" content={planet.description} />
+        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`Your Cosmic Match: ${planet.name} | What Planet Am I?`} />
+        <meta name="twitter:description" content={planet.description} />
+        <meta name="twitter:image" content="/og-image.png" />
+        <link rel="canonical" href="https://whatplanetami.com/result" />
+      </Head>
+      <div className="max-w-5xl mx-auto px-6 py-10 space-y-6">
   <h1 className="text-3xl md:text-5xl font-cosmic text-white text-center">
         <DecryptedText
           text="Your Cosmic Match"
@@ -78,6 +93,7 @@ export default function ResultPage() {
           <DecryptedText text={shared} animateOn="view" encryptedClassName="text-sky-300/70" />
         </p>
       )}
-    </div>
+      </div>
+    </>
   );
 }
