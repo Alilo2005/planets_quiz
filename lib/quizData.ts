@@ -203,25 +203,57 @@ export const planets: Record<PlanetId, PlanetInfo> = {
   },
 };
 
+// Planet id list reused in normalization and scoring
+const PLANET_IDS: PlanetId[] = [
+  "mercury",
+  "venus",
+  "earth",
+  "mars",
+  "jupiter",
+  "saturn",
+  "uranus",
+  "neptune",
+  "pluto",
+];
+
+// Compute how often each planet appears (and with what weight) across all options.
+// We'll normalize final scores by this "opportunity" so rarely-appearing planets aren't disadvantaged.
+const PLANET_OPPORTUNITY: Record<PlanetId, number> = (() => {
+  const totals = Object.fromEntries(PLANET_IDS.map((id) => [id, 0])) as Record<PlanetId, number>;
+  for (const q of questions) {
+    for (const opt of q.options) {
+      for (const [pid, w] of Object.entries(opt.weights)) {
+        const k = pid as PlanetId;
+        totals[k] = (totals[k] ?? 0) + (w ?? 0);
+      }
+    }
+  }
+  return totals;
+})();
+
+// Scale factors so that each planet's total opportunity is normalized around the average.
+const PLANET_NORMALIZATION: Record<PlanetId, number> = (() => {
+  const vals = PLANET_IDS.map((id) => PLANET_OPPORTUNITY[id] || 0);
+  const sum = vals.reduce((a, b) => a + b, 0);
+  const avg = (sum / PLANET_IDS.length) || 1;
+  const EPS = 1e-6;
+  const out = Object.fromEntries(
+    PLANET_IDS.map((id) => [id, avg / Math.max(PLANET_OPPORTUNITY[id], EPS)])
+  ) as Record<PlanetId, number>;
+  return out;
+})();
+
 // Deterministic tie-breaking to avoid bias toward earlier planets in the list.
 export function computeResult(scores: Partial<Record<PlanetId, number>>): PlanetId {
-  const ids: PlanetId[] = [
-    "mercury",
-    "venus",
-    "earth",
-    "mars",
-    "jupiter",
-    "saturn",
-    "uranus",
-    "neptune",
-    "pluto",
-  ];
+  const ids: PlanetId[] = PLANET_IDS;
 
+  // Apply normalization so planets that appear less frequently are up-weighted fairly.
+  const adjusted = ids.map((id) => (scores[id] ?? 0) * (PLANET_NORMALIZATION[id] ?? 1));
   // Find maximum score with tolerance for floating point rounding.
-  const values = ids.map((id) => scores[id] ?? 0);
+  const values = adjusted;
   const max = Math.max(...values);
   const EPS = 1e-6;
-  const top: PlanetId[] = ids.filter((id) => Math.abs((scores[id] ?? 0) - max) < EPS);
+  const top: PlanetId[] = ids.filter((_, i) => Math.abs(values[i] - max) < EPS);
 
   if (top.length === 0) return "earth"; // fallback
   if (top.length === 1) return top[0];
