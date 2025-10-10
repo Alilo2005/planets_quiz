@@ -203,9 +203,9 @@ export const planets: Record<PlanetId, PlanetInfo> = {
   },
 };
 
+// Deterministic tie-breaking to avoid bias toward earlier planets in the list.
 export function computeResult(scores: Partial<Record<PlanetId, number>>): PlanetId {
-  let best: { id: PlanetId; score: number } | null = null;
-  const order: PlanetId[] = [
+  const ids: PlanetId[] = [
     "mercury",
     "venus",
     "earth",
@@ -216,9 +216,29 @@ export function computeResult(scores: Partial<Record<PlanetId, number>>): Planet
     "neptune",
     "pluto",
   ];
-  for (const id of order) {
-    const v = scores[id] ?? 0;
-    if (!best || v > best.score) best = { id, score: v };
+
+  // Find maximum score with tolerance for floating point rounding.
+  const values = ids.map((id) => scores[id] ?? 0);
+  const max = Math.max(...values);
+  const EPS = 1e-6;
+  const top: PlanetId[] = ids.filter((id) => Math.abs((scores[id] ?? 0) - max) < EPS);
+
+  if (top.length === 0) return "earth"; // fallback
+  if (top.length === 1) return top[0];
+
+  // Stable, deterministic selection among ties based on a hash of the score vector.
+  const signature = ids.map((id) => `${id}:${(scores[id] ?? 0).toFixed(4)}`).join("|");
+  const index = stableIndex(signature, top.length);
+  return top[index];
+}
+
+function stableIndex(input: string, mod: number): number {
+  // FNV-1a 32-bit hash (simple, fast, deterministic)
+  let hash = 0x811c9dc5; // 2166136261
+  for (let i = 0; i < input.length; i++) {
+    hash ^= input.charCodeAt(i);
+    hash = (hash >>> 0) + ((hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24));
+    hash = hash >>> 0; // ensure uint32
   }
-  return best ? best.id : "earth";
+  return mod > 0 ? (hash % mod) : 0;
 }
