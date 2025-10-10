@@ -1,4 +1,5 @@
-import React, { CSSProperties, PropsWithChildren, useEffect, useId, useLayoutEffect, useRef } from 'react';
+"use client";
+import React, { CSSProperties, PropsWithChildren, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 
 type ElectricBorderProps = PropsWithChildren<{
   color?: string;
@@ -7,6 +8,10 @@ type ElectricBorderProps = PropsWithChildren<{
   thickness?: number;
   className?: string;
   style?: CSSProperties;
+  animated?: boolean; // master switch
+  disableOnTouch?: boolean; // disable animation on coarse pointers
+  respectReducedMotion?: boolean; // follow prefers-reduced-motion
+  animateWhenInView?: boolean; // only animate when visible
 }>;
 
 function hexToRgba(hex: string, alpha = 1): string {
@@ -32,21 +37,35 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
   chaos = 1,
   thickness = 2,
   className,
-  style
+  style,
+  animated = true,
+  disableOnTouch = true,
+  respectReducedMotion = true,
+  animateWhenInView = true
 }) => {
   const rawId = useId().replace(/[:]/g, '');
   const filterId = `turbulent-displace-${rawId}`;
   const svgRef = useRef<SVGSVGElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const strokeRef = useRef<HTMLDivElement | null>(null);
+  const inViewRef = useRef<boolean>(true);
+  const [inView, setInView] = useState(true);
+  const [envReady, setEnvReady] = useState(false);
+  const isCoarseRef = useRef(false);
+  const prefersReduceRef = useRef(false);
 
   const updateAnim = () => {
     const svg = svgRef.current;
     const host = rootRef.current;
     if (!svg || !host) return;
+    const shouldAnimate =
+      animated &&
+      (!disableOnTouch || !isCoarseRef.current) &&
+      (!respectReducedMotion || !prefersReduceRef.current) &&
+      (!animateWhenInView || inViewRef.current);
 
     if (strokeRef.current) {
-      strokeRef.current.style.filter = `url(#${filterId})`;
+      strokeRef.current.style.filter = shouldAnimate ? `url(#${filterId})` : 'none';
     }
 
     const width = Math.max(1, Math.round(host.clientWidth || host.getBoundingClientRect().width || 0));
@@ -64,9 +83,9 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       dxAnims[1].setAttribute('values', `0; -${width}`);
     }
 
-    const baseDur = 6;
-    const dur = Math.max(0.001, baseDur / (speed || 1));
-    [...dyAnims, ...dxAnims].forEach(a => a.setAttribute('dur', `${dur}s`));
+  const baseDur = 6;
+  const dur = Math.max(0.001, baseDur / (speed || 1));
+  [...dyAnims, ...dxAnims].forEach(a => a.setAttribute('dur', `${dur}s`));
 
     const disp = svg.querySelector('feDisplacementMap');
     if (disp) disp.setAttribute('scale', String(30 * (chaos || 1)));
@@ -79,27 +98,53 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
       filterEl.setAttribute('height', '500%');
     }
 
-    requestAnimationFrame(() => {
-      [...dyAnims, ...dxAnims].forEach((a: any) => {
-        if (typeof a.beginElement === 'function') {
-          try {
-            a.beginElement();
-          } catch {}
-        }
+    if (shouldAnimate) {
+      requestAnimationFrame(() => {
+        [...dyAnims, ...dxAnims].forEach((a: any) => {
+          if (typeof a.beginElement === 'function') {
+            try {
+              a.beginElement();
+            } catch {}
+          }
+        });
       });
-    });
+    }
   };
 
   useEffect(() => {
+    // environment detection on client
+    if (typeof window !== 'undefined') {
+      isCoarseRef.current = 'ontouchstart' in window || (navigator.maxTouchPoints ?? 0) > 0 ||
+        (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+      prefersReduceRef.current = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      setEnvReady(true);
+    }
+  }, []);
+
+  useEffect(() => {
     updateAnim();
-  }, [speed, chaos]);
+  }, [speed, chaos, animated, disableOnTouch, respectReducedMotion, animateWhenInView, inView, envReady]);
 
   useLayoutEffect(() => {
     if (!rootRef.current) return;
     const ro = new ResizeObserver(() => updateAnim());
     ro.observe(rootRef.current);
+
+    let io: IntersectionObserver | null = null;
+    if (animateWhenInView && typeof window !== 'undefined' && 'IntersectionObserver' in window) {
+      io = new IntersectionObserver((entries) => {
+        const v = entries[0]?.isIntersecting ?? true;
+        inViewRef.current = v;
+        setInView(v);
+      }, { root: null, threshold: 0.1 });
+      io.observe(rootRef.current);
+    }
+
     updateAnim();
-    return () => ro.disconnect();
+    return () => {
+      ro.disconnect();
+      io?.disconnect();
+    };
   }, []);
 
   const inheritRadius: CSSProperties = {

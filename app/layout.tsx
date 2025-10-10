@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Space_Grotesk, Playfair_Display, Roboto_Flex, Orbitron } from "next/font/google";
 import ClientLayout from "@/components/ClientLayout";
+import Analytics from "@/components/Analytics";
+import Script from "next/script";
+import { GA_ID, hasGA } from "@/lib/gtag";
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-sans" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-serif" });
@@ -82,7 +85,23 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased font-sans bg-galaxy text-silver min-h-screen overflow-x-hidden">
-        <ClientLayout>{children}</ClientLayout>
+        {hasGA && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', { send_page_view: false });
+              `}
+            </Script>
+          </>
+        )}
+        <ClientLayout>
+          <Analytics />
+          {children}
+        </ClientLayout>
       </body>
     </html>
   );

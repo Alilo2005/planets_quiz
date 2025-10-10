@@ -8,7 +8,16 @@ import ElectricBorder from "@/components/ElectricBorder";
 
 export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
   return (
-    <ElectricBorder className="relative w-full max-w-4xl mx-auto rounded-2xl" color="#a855f7" thickness={2} chaos={1} speed={1.2}>
+    <ElectricBorder
+      className="relative w-full max-w-4xl mx-auto rounded-2xl"
+      color="#a855f7"
+      thickness={2}
+      chaos={0.9}
+      speed={1}
+      disableOnTouch
+      respectReducedMotion
+      animateWhenInView
+    >
       <div className="relative p-6 md:p-8 rounded-2xl bg-white/5 backdrop-blur-xl">
       <div className="grid md:grid-cols-[220px,1fr] gap-6 items-center">
         <div className="relative h-48 md:h-56">
