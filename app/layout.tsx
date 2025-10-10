@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Space_Grotesk, Playfair_Display, Roboto_Flex, Orbitron } from "next/font/google";
 import ClientLayout from "@/components/ClientLayout";
+import { Suspense } from "react";
 import Analytics from "@/components/Analytics";
 import Script from "next/script";
 import { GA_ID, hasGA } from "@/lib/gtag";
@@ -99,7 +100,9 @@ export default function RootLayout({
           </>
         )}
         <ClientLayout>
-          <Analytics />
+          <Suspense fallback={null}>
+            <Analytics />
+          </Suspense>
           {children}
         </ClientLayout>
       </body>
