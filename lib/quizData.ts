@@ -40,10 +40,10 @@ export const questions: Question[] = [
     topic: "teamwork",
     prompt: "What role do you usually take on in a group?",
     options: [
-      { id: "a", text: "The planner — I help organize and guide the group.", weights: { mercury: 0.8, saturn: 0.8 } },
-      { id: "b", text: "The supporter — I keep everyone’s spirits up.", weights: { venus: 1, earth: 0.5 } },
-      { id: "c", text: "The leader — I like driving things forward.", weights: { mars: 1, jupiter: 0.5 } },
-      { id: "d", text: "The creative — I bring new ideas and like doing things differently.", weights: { uranus: 1 } },
+      { id: "a", text: "I help organize and guide the group.", weights: { mercury: 0.8, saturn: 0.8 } },
+      { id: "b", text: "I keep everyone’s spirits up.", weights: { venus: 1, earth: 0.5 } },
+      { id: "c", text: "I like driving things forward.", weights: { mars: 1, jupiter: 0.5 } },
+      { id: "d", text: "I bring new ideas and like doing things differently.", weights: { uranus: 1 } },
     ],
   },
   {
@@ -54,7 +54,7 @@ export const questions: Question[] = [
       { id: "a", text: "Quick and to the point.", weights: { mercury: 1 } },
       { id: "b", text: "Friendly and thoughtful.", weights: { venus: 1, neptune: 0.5 } },
       { id: "c", text: "Direct and confident.", weights: { mars: 1, saturn: 0.5 } },
-      { id: "d", text: "Creative — I like using humor or different approaches.", weights: { uranus: 1, jupiter: 0.3 } },
+      { id: "d", text: "I like using humor or different approaches.", weights: { uranus: 1, jupiter: 0.3 } },
     ],
   },
   {
