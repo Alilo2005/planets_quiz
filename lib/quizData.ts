@@ -7,10 +7,10 @@ export const questions: Question[] = [
     topic: "motivation",
     prompt: "What motivates you most days?",
     options: [
-      { id: "a", text: "Curiosity — I love to learn new things.", weights: { mercury: 1, uranus: 0.5 } },
-      { id: "b", text: "Connection — being around people energizes me.", weights: { venus: 1, earth: 0.5 } },
-      { id: "c", text: "Making a difference — I want to have an impact.", weights: { mars: 1, jupiter: 0.5 } },
-      { id: "d", text: "Wonder — I enjoy exploring new and unusual ideas.", weights: { neptune: 1 } },
+      { id: "a", text: "I love to learn new things.", weights: { mercury: 1, uranus: 0.5 } },
+      { id: "b", text: "Being around people energizes me.", weights: { venus: 1, earth: 0.5 } },
+      { id: "c", text: "I want to have an impact.", weights: { mars: 1, jupiter: 0.5 } },
+      { id: "d", text: "I enjoy exploring new and unusual ideas.", weights: { neptune: 1 } },
     ],
   },
   {
