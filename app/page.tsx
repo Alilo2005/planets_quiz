@@ -1,5 +1,6 @@
 "use client"
 import Link from "next/link";
+import Image from "next/image";
 import CosmicButton from "@/components/CosmicButton";
 import BlurText from "@/components/BlurText";
 import CosmicProximityText from "@/components/CosmicProximityText";
@@ -13,6 +14,17 @@ export default function Home() {
   return (
   <div className="min-h-[80vh] flex items-center justify-center px-6 py-20 relative">
   <div className="max-w-3xl text-center space-y-3">
+        {/* Logo */}
+        <Link href="/" className="inline-block mb-3" aria-label="Home">
+          <Image
+            src="/logo.png"
+            alt="What Planet Am I?"
+            width={96}
+            height={96}
+            priority
+            className="mx-auto h-20 w-20 object-contain select-none"
+          />
+        </Link>
         <BlurText
           text="What Planet Am I?"
           animateBy="words"
@@ -21,15 +33,15 @@ export default function Home() {
           className="text-4xl md:text-6xl font-cosmic text-white mb-4 drop-shadow-[0_0_30px_rgba(255,232,31,0.2)]"
         />
         <CosmicProximityText
-          text={"Step into the neon void. Drift through aurora gradients and starlit signals. At the journey's end, a world will speak your name."}
+          text={"check your cosmic alignment and be part of the solar system"}
           className="text-silver"
         />
         <p className="sr-only">
-          <DecryptedText text={"Step into the neon void. Drift through aurora gradients and starlit signals. At the journey's end, a world will speak your name."} animateOn="view" />
+          <DecryptedText text="Which planet are you?" animateOn="view" />
         </p>
         <Link href="/quiz/1">
-          <CosmicButton className="text-lg">
-            <DecryptedText text="Start Quiz" animateOn="view" encryptedClassName="text-yellow-300/80" />
+          <CosmicButton className="text-lg md:text-xl px-6 py-3 mt-6">
+            <DecryptedText text="Start" animateOn="view" encryptedClassName="text-yellow-300/80" />
           </CosmicButton>
         </Link>
       </div>
