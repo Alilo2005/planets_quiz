@@ -1,7 +1,7 @@
 "use client";
 import ScrollVelocity from "@/components/ScrollVelocity";
 
-export default function AstrotechTag({ inline = false, className = "", textClassName = "text-fuchsia-300/80" }: { inline?: boolean; className?: string; textClassName?: string }) {
+export default function AstrotechTag({ inline = false, className = "", textClassName = "text-yellow-300/80" }: { inline?: boolean; className?: string; textClassName?: string }) {
   if (inline) {
     return (
       <div className={`pointer-events-none select-none flex justify-center ${className}`}>
@@ -11,7 +11,7 @@ export default function AstrotechTag({ inline = false, className = "", textClass
             velocity={60}
             numCopies={4}
             className={`px-4 ${textClassName}`}
-            scrollerClassName="scale-50 md:scale-75 drop-shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+            scrollerClassName="scale-50 md:scale-75 drop-shadow-[0_0_20px_rgba(255,232,31,0.3)]"
             parallaxClassName="[mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]"
           />
         </div>
@@ -27,7 +27,7 @@ export default function AstrotechTag({ inline = false, className = "", textClass
           velocity={60}
           numCopies={4}
           className={`px-4 ${textClassName}`}
-          scrollerClassName="scale-50 md:scale-75 drop-shadow-[0_0_20px_rgba(168,85,247,0.3)]"
+          scrollerClassName="scale-50 md:scale-75 drop-shadow-[0_0_20px_rgba(255,232,31,0.3)]"
           parallaxClassName="[mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]"
         />
       </div>

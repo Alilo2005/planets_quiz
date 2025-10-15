@@ -16,7 +16,7 @@ export default function CosmicButton({
 }: Props) {
   return (
     <motion.button
-      whileHover={{ y: -1, boxShadow: glow ? "0 0 24px rgba(168,85,247,0.45)" : undefined }}
+      whileHover={{ y: -1, boxShadow: glow ? "0 0 24px rgba(255,232,31,0.45)" : undefined }}
       whileTap={{ scale: 0.98 }}
       className={cn(
   "relative inline-flex items-center justify-center rounded-xl px-5 py-3 font-medium cursor-target",
@@ -29,7 +29,7 @@ export default function CosmicButton({
     >
       {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
       {children}
-      <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-white/10" />
+      <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-yellow-300/10" />
     </motion.button>
   );
 }

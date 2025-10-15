@@ -37,12 +37,12 @@ export default function QuizStep() {
     <div className="max-w-4xl mx-auto px-6 py-10 space-y-6">
       <ProgressBar value={idx} total={total} />
       <p className="text-silver">
-        <DecryptedText text={`Stage ${idx + 1} of ${total}`} animateOn="view" encryptedClassName="text-sky-200/70" />
+        <DecryptedText text={`Stage ${idx + 1} of ${total}`} animateOn="view" encryptedClassName="text-blue-200/70" />
       </p>
       <QuestionCard prompt={q.prompt} options={q.options} selected={selected} onSelect={onSelect} />
       <div className="flex justify-end">
         <CosmicButton onClick={goNext} disabled={!selected}>
-          <DecryptedText text="Next" animateOn="view" encryptedClassName="text-fuchsia-300/70" />
+          <DecryptedText text="Next" animateOn="view" encryptedClassName="text-yellow-300/80" />
         </CosmicButton>
       </div>
     </div>

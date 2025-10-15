@@ -17,7 +17,7 @@ export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-full overflow-hidden bg-gradient-to-tr from-fuchsia-500/40 via-sky-400/40 to-violet-500/40 shadow-[0_0_80px_rgba(168,85,247,0.35)]">
+            <div className="relative h-40 w-40 md:h-48 md:w-48 rounded-full overflow-hidden bg-gradient-to-tr from-yellow-400/40 via-blue-400/40 to-red-500/40 shadow-[0_0_80px_rgba(255,232,31,0.35)]">
               <motion.div
                 className="absolute inset-0 rounded-full z-0"
                 animate={{ rotate: 360 }}
@@ -35,7 +35,7 @@ export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
                     unstyled
                     fitParent
                     gridSize={12}
-                    pixelColor="rgba(168,85,247,0.6)"
+                    pixelColor="rgba(250, 236, 36, 0.6)"
                     animationStepDuration={0.5}
                     className="w-full h-full"
                     firstContent={
@@ -77,15 +77,15 @@ export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
               revealDirection="center"
               speed={40}
               className="text-white"
-              encryptedClassName="text-fuchsia-300/70"
+              encryptedClassName="text-yellow-300/80"
             />
           </h2>
-          <p className="text-fuchsia-300 mb-4">
+          <p className="text-yellow-300 mb-4">
             <DecryptedText
               text={planet.tagline}
               animateOn="view"
               speed={30}
-              encryptedClassName="text-fuchsia-200/70"
+              encryptedClassName="text-yellow-200/80"
             />
           </p>
           <p className="text-silver leading-relaxed mb-4">
@@ -93,28 +93,28 @@ export default function PlanetResultCard({ planet }: { planet: PlanetInfo }) {
               text={planet.description}
               animateOn="view"
               speed={28}
-              encryptedClassName="text-sky-200/60"
+              encryptedClassName="text-blue-200/70"
             />
           </p>
-          <p className="text-sky-200/90 flex gap-1 items-baseline flex-wrap">
+          <p className="text-blue-200/90 flex gap-1 items-baseline flex-wrap">
             <DecryptedText
               text="Fun fact:"
               animateOn="view"
               speed={26}
-              className="font-semibold text-sky-100"
-              encryptedClassName="text-sky-300/70"
+              className="font-semibold text-blue-100"
+              encryptedClassName="text-blue-300/70"
             />
             <DecryptedText
               text={planet.funFact}
               animateOn="view"
               speed={26}
-              encryptedClassName="text-sky-200/70"
+              encryptedClassName="text-blue-200/70"
             />
           </p>
         </div>
       </div>
       <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/10" />
-      <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-tr from-fuchsia-500/10 via-sky-400/10 to-violet-500/10" />
+      <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-tr from-yellow-400/10 via-blue-400/10 to-red-500/10" />
       </div>
     </div>
   );

@@ -63,7 +63,7 @@ export default function RootLayout({
     <html lang="en" className={`${spaceGrotesk.variable} ${playfair.variable} ${robotoFlex.variable} ${orbitron.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#0a0020" />
+  <meta name="theme-color" content="#05060a" />
         <link rel="canonical" href="https://whatplanetami.com/" />
         <script
           type="application/ld+json"

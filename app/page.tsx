@@ -18,7 +18,7 @@ export default function Home() {
           animateBy="words"
           direction="top"
           delay={80}
-          className="text-4xl md:text-6xl font-cosmic text-white mb-4 drop-shadow-[0_0_30px_rgba(168,85,247,0.2)]"
+          className="text-4xl md:text-6xl font-cosmic text-white mb-4 drop-shadow-[0_0_30px_rgba(255,232,31,0.2)]"
         />
         <CosmicProximityText
           text={"Step into the neon void. Drift through aurora gradients and starlit signals. At the journey's end, a world will speak your name."}
@@ -29,7 +29,7 @@ export default function Home() {
         </p>
         <Link href="/quiz/1">
           <CosmicButton className="text-lg">
-            <DecryptedText text="Start Quiz" animateOn="view" encryptedClassName="text-fuchsia-300/70" />
+            <DecryptedText text="Start Quiz" animateOn="view" encryptedClassName="text-yellow-300/80" />
           </CosmicButton>
         </Link>
       </div>
@@ -40,7 +40,7 @@ export default function Home() {
       >
         <LaserFlow
           className="absolute inset-0"
-          color="#a855f7"
+          color="#FFE81F"
           fogIntensity={0.4}
           wispDensity={1.2}
           horizontalSizing={0.4}
@@ -50,7 +50,7 @@ export default function Home() {
         />
       </div>
 
-      <AstrotechTag className="text-white/90" textClassName="text-white/90" />
+      <AstrotechTag className="text-white/90" textClassName="text-yellow-300/80" />
     </div>
   );
 }

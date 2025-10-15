@@ -18,7 +18,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
             particleCount={240}
             particleSpread={10}
             speed={0.12}
-            particleColors={["#ffffff", "#a855f7", "#60a5fa", "#e879f9"]}
+            particleColors={["#ffffff", "#FFE81F", "#60a5fa", "#ef4444"]}
             alphaParticles={true}
             particleBaseSize={100}
             sizeRandomness={1}

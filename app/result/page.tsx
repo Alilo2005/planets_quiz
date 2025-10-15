@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { useQuiz } from "@/lib/quizContext";
 import { computeResult, planets, questions } from "@/lib/quizData";
 import PlanetResultCard from "@/components/PlanetResultCard";
-import WhyThisResult from "@/components/WhyThisResult";
 import DecryptedText from "@/components/DecryptedText";
 import { Github, Instagram } from "lucide-react";
 import CosmicButton from "@/components/CosmicButton";
@@ -32,7 +31,7 @@ export default function ResultPage() {
     if (navigator.share) {
       try {
         await navigator.share({ title: "What Planet Am I?", text, url });
-        setShared("Shared with your universe ✨");
+        setShared("Shared with your universe!");
       } catch {
         setShared("Sharing canceled");
       }
@@ -66,17 +65,16 @@ export default function ResultPage() {
           revealDirection="center"
           speed={40}
           className="text-white"
-          encryptedClassName="text-fuchsia-300/70"
+          encryptedClassName="text-yellow-300/80"
         />
       </h1>
       <PlanetResultCard planet={planet} />
-      <WhyThisResult planetId={planetId as any} scores={scores} questions={questions} answers={answers} />
       <div className="flex items-center justify-center gap-3">
         <CosmicButton onClick={() => { reset(); router.push("/"); }}>
-          <DecryptedText text="Retake Quiz" animateOn="view" encryptedClassName="text-fuchsia-300/70" />
+          <DecryptedText text="Retake Quiz" animateOn="view" encryptedClassName="text-yellow-300/80" />
         </CosmicButton>
         <CosmicButton onClick={share}>
-          <DecryptedText text="Share Result" animateOn="view" encryptedClassName="text-fuchsia-300/70" />
+          <DecryptedText text="Share Result" animateOn="view" encryptedClassName="text-yellow-300/80" />
         </CosmicButton>
       </div>
       <div className="pt-4 flex items-center justify-center gap-5 text-silver">
@@ -100,8 +98,8 @@ export default function ResultPage() {
         </a>
       </div>
       {shared && (
-        <p className="text-center text-sky-200/90">
-          <DecryptedText text={shared} animateOn="view" encryptedClassName="text-sky-300/70" />
+        <p className="text-center text-blue-200/90">
+          <DecryptedText text={shared} animateOn="view" encryptedClassName="text-blue-300/70" />
         </p>
       )}
       </div>

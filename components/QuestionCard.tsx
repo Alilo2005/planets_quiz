@@ -55,17 +55,17 @@ export default function QuestionCard({
             className={cn(
               "text-left p-4 rounded-xl border backdrop-blur-md transition-all",
               "bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20",
-              selected === opt.id && "bg-white/15 border-white/30 ring-1 ring-fuchsia-400/40"
+              selected === opt.id && "bg-white/15 border-white/30 ring-1 ring-yellow-300/40"
             )}
           >
             <span className="text-silver text-base md:text-lg">
-              <DecryptedText text={opt.text} animateOn="view" encryptedClassName="text-sky-200/70" />
+              <DecryptedText text={opt.text} animateOn="view" encryptedClassName="text-blue-200/70" />
             </span>
           </button>
         ))}
       </div>
       <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/10" />
-      <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-tr from-fuchsia-500/10 via-sky-400/10 to-violet-500/10" />
+      <div className="pointer-events-none absolute -inset-px rounded-2xl bg-gradient-to-tr from-yellow-400/10 via-blue-400/10 to-red-500/10" />
     </motion.div>
   );
 }
